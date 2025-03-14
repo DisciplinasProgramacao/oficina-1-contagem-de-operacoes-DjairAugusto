@@ -36,12 +36,14 @@ public class App {
      * @param vetor Vetor com dados para teste.
      * @return Uma resposta que significa....
      */
-    static int codigo1(int[] vetor) {
+    static int[] codigo1(int[] vetor) {
         int resposta = 0;
+        int operacoes = 0; 
         for (int i = 0; i < vetor.length; i += 2) {
-            resposta += vetor[i]%2;
+            resposta += vetor[i] % 2;
+            operacoes++; 
         }
-        return resposta;
+        return new int[]{resposta, operacoes}; 
     }
 
     /**
@@ -49,32 +51,39 @@ public class App {
      * @param vetor Vetor com dados para teste.
      * @return Uma resposta que significa....
      */
-    static int codigo2(int[] vetor) {
+    static int[] codigo2(int[] vetor) {
         int contador = 0;
+        int operacoes = 0; 
         for (int k = (vetor.length - 1); k > 0; k /= 2) {
             for (int i = 0; i <= k; i++) {
                 contador++;
+                operacoes++; 
             }
-
+            operacoes++;
         }
-        return contador;
+        return new int[]{contador, operacoes}; 
     }
 
     /**
      * Código de teste 3. Este método...
      * @param vetor Vetor com dados para teste.
      */
-    static void codigo3(int[] vetor) {
+    static int codigo3(int[] vetor) {
+        int operacoes = 0; 
         for (int i = 0; i < vetor.length - 1; i++) {
             int menor = i;
             for (int j = i + 1; j < vetor.length; j++) {
-                if (vetor[j] < vetor[menor])
+                if (vetor[j] < vetor[menor]) {
                     menor = j;
+                }
+                operacoes++;
             }
             int temp = vetor[i];
             vetor[i] = vetor[menor];
             vetor[menor] = temp;
+            operacoes++; 
         }
+        return operacoes; 
     }
 
     /**
@@ -103,15 +112,43 @@ public class App {
         
     }
     public static void main(String[] args) {
-        // para cada codigo,
-        // itere sobre o array de tamanhos de teste correspondente
-        // rode o codigo,
-        // salve o tempo de execuçao do mesmo.
+        // Testar codigo1
+        System.out.println("Testando codigo1:");
+        for (int tamanho : tamanhosTesteGrande) {
+            int[] vetor = gerarVetor(tamanho);
+            long inicio = System.nanoTime(); 
+            int[] resultado = codigo1(vetor); 
+            long fim = System.nanoTime(); 
+            System.out.println("Tamanho: " + tamanho + " - Tempo de execução: " + (fim - inicio) + " ns - Operações: " + resultado[1]);
+        }
 
-        // marcar o tempo de inicio
+        // Testar codigo2
+        System.out.println("\nTestando codigo2:");
+        for (int tamanho : tamanhosTesteMedio) {
+            int[] vetor = gerarVetor(tamanho);
+            long inicio = System.nanoTime(); 
+            int[] resultado = codigo2(vetor); 
+            long fim = System.nanoTime(); 
+            System.out.println("Tamanho: " + tamanho + " - Tempo de execução: " + (fim - inicio) + " ns - Operações: " + resultado[1]);
+        }
 
-        // executar o codigo
+        // Testar codigo3
+        System.out.println("\nTestando codigo3:");
+        for (int tamanho : tamanhosTesteMedio) {
+            int[] vetor = gerarVetor(tamanho);
+            long inicio = System.nanoTime(); 
+            int operacoes = codigo3(vetor); 
+            long fim = System.nanoTime(); 
+            System.out.println("Tamanho: " + tamanho + " - Tempo de execução: " + (fim - inicio) + " ns - Operações: " + operacoes);
+        }
 
-        // marcar o tempo de fim
+        // Testar codigo4
+        System.out.println("\nTestando codigo4:");
+        for (int tamanho : tamanhosTestePequeno) {
+            long inicio = System.nanoTime(); 
+            int resultado = codigo4(tamanho); 
+            long fim = System.nanoTime(); 
+            System.out.println("Tamanho: " + tamanho + " - Tempo de execução: " + (fim - inicio) + " ns - Resultado: " + resultado);
+        }
     }
 }
