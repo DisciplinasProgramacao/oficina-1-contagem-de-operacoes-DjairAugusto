@@ -4,6 +4,6 @@ Oficinas e atividade pontuada realizada em AED II, tendo em vista algoritmos de 
 
 ## Aluno 
 
-* Nome completo do aluno 1
+* Djair Augusto Galdino Soares
 
 
